@@ -13,11 +13,11 @@ class Board
       }
   end
 
+  def cell_empty?(where)
+    @matrix[where] == nil
+  end
+
   def update(where, mark)
-    if @matrix[where] == nil
-      @matrix[where] = mark
-    else
-      p "ERROR - There is already a #{@matrix[where]} there!"
-    end
+    @matrix[where] = mark
   end
 end

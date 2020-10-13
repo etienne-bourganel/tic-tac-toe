@@ -3,9 +3,10 @@
 require 'pry'
 
 class Player
-  attr_reader :name, :mark, :score
+  attr_reader :mark, :score
+  attr_accessor :name
 
-  def initialize(name,mark)
+  def initialize(name, mark)
     @name = name
     @mark = mark
     @score = 0
@@ -13,5 +14,9 @@ class Player
 
   def move(where)
     where
+  end
+
+  def has_won?
+    false
   end
 end

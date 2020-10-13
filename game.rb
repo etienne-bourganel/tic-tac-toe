@@ -1,7 +1,6 @@
 require 'pry'
 
 class Game
-  def turn
-    
-  
+  def turn(player, board)
+  end
 end
