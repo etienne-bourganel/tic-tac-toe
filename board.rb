@@ -20,4 +20,12 @@ class Board
   def update(where, mark)
     @matrix[where] = mark
   end
+
+  def show_board
+    puts  "\n
+    | #{@matrix[7] || 7 } | #{@matrix[8] || 8 } | #{@matrix[9] || 9 } |\n
+    | #{@matrix[4] || 4 } | #{@matrix[5] || 5 } | #{@matrix[6] || 6 } |\n
+    | #{@matrix[1] || 1 } | #{@matrix[2] || 2 } | #{@matrix[3] || 3 } |\n
+    "
+  end
 end
