@@ -46,16 +46,21 @@ class Game
 
   def flow
     @board.show_board
-    until (@winner != nil) do
+    until (winner || draw) do
       @players.each do |player|
-        announce_winner
         turn(player)
       end
+    end
+    if winner
+      announce_winner
+    end
+    if draw
+      announce_draw
     end
   end
 
   def turn(player)
-    if @winner
+    if winner || draw
        return
     end
     Display.player_turn_start(player.name)
@@ -81,9 +86,11 @@ class Game
   end
 
   def announce_winner
-    if @winner
-       Display.the_winner_is(@winner)
-    end
+    Display.the_winner_is(@winner)
+  end
+
+  def announce_draw
+    Display.draw
   end
 
   def manage_move(player, where)
@@ -97,5 +104,11 @@ class Game
     end
   end
 
-  
+  def draw
+    if !(@board.matrix.values.include?(nil)) and !(@winner)
+      return true
+    else return false
+    end
+  end
+
 end

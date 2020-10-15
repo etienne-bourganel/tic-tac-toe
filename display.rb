@@ -30,6 +30,10 @@ class Display
   end
 
   def self.the_winner_is(player)
-    puts "The winner is #{player.name}"
+    puts "The winner is #{player.name}!"
+  end
+
+  def self.draw
+    puts "It's a draw! Nobody wins!"
   end
 end
