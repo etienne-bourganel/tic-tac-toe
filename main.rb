@@ -7,6 +7,5 @@ require_relative 'display'
 require_relative 'game'
 
 game = Game.new
-game.flow
-
-binding.pry
+game.one_flow
+game.another_game?

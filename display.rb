@@ -36,4 +36,10 @@ class Display
   def self.draw
     puts "It's a draw! Nobody wins!"
   end
+
+  def self.score(player1, player2)
+    puts "\n
+      #{player1.name}'s score is #{player1.score}\n
+      #{player2.name}'s score is #{player2.score}\n"
+  end
 end
