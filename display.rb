@@ -24,4 +24,12 @@ class Display
   def self.cell_not_empty_error(mark)
     puts "\nERROR - There is already a #{mark} here!"
   end
+
+  def self.error_move_out_of_range
+    puts "\nERROR! Please choose a cell betwwen 1 and 9."
+  end
+
+  def self.the_winner_is(player)
+    puts "The winner is #{player.name}"
+  end
 end

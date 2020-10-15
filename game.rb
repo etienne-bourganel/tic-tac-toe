@@ -2,16 +2,17 @@ require 'pry'
 
 class Game
 
-  attr_reader :player1, :player2, :players, :board
+  attr_reader :player1, :player2, :players, :board, :winner
 
-  # All winning positions sotred in a global constant
-  $WINNING_POSITIONS = [[1, 2, 3], [1, 4, 7], [2, 5, 8], [3, 6, 9], [7, 5, 3], [4, 5, 6], [1, 5, 9], [7, 8, 9]]
-
+  # All winning positions sotred in a constant
+  
   def initialize
     @board = Board.new
     create_players
     @players = [player1, player2]
     display_start_info
+    @WIN_MOV = [[1, 2, 3], [1, 4, 7], [2, 5, 8], [3, 6, 9], [7, 5, 3], [4, 5, 6], [1, 5, 9], [7, 8, 9]]
+    @winner = nil
   end
 
   def create_players
@@ -30,30 +31,71 @@ class Game
     Display.game_start(player1, player2)
   end
 
-  def turn
-    @players.each {|player|
-      @board.show_board
-      get_input(player)
-      if check_win(player) == false
-        p "#{player.name} is winning."
+  def player_moves(player)
+    (@board.matrix.select {|k, v| v == (player.mark)}).keys
+  end
+
+  def test_win(player)
+    @WIN_MOV.each do |trio|
+      if (trio - player_moves(player)).empty?
+          @winner = player
+          return true
       end
-    }
+    end
+  end
+
+  def flow
+    @board.show_board
+    until (@winner != nil) do
+      @players.each do |player|
+        announce_winner
+        turn(player)
+      end
+    end
+  end
+
+  def turn(player)
+    if @winner
+       return
+    end
+    Display.player_turn_start(player.name)
+    where = get_input(player)
+    manage_move(player, where)
+    @board.show_board
   end
 
   def get_input(player)
-    Display.player_turn_start(player.name)
-      where = gets.chomp.to_i
-      if @board.cell_empty?(where)
-        @board.update(where, player.mark)
-      else 
-        Display.cell_not_empty_error(@board.matrix[where])
-      end
+    gets.chomp.to_i
   end
 
-  def check_win(player)
-    player_moves = (@board.matrix.select {|k, v| v == (player.mark)}).keys
-    $WINNING_POSITIONS.each do |trio|
-      (trio - player_moves).empty?
+  def move_in_range?(where)
+    if where.between?(1,9)
+      return true
     end
   end
+
+  def cell_empty?(where)
+    if @board.cell_empty?(where)
+      return true
+    end
+  end
+
+  def announce_winner
+    if @winner
+       Display.the_winner_is(@winner)
+    end
+  end
+
+  def manage_move(player, where)
+    if move_in_range?(where) == true
+      if cell_empty?(where) == true
+        @board.update(where, player.mark)
+        test_win(player)
+      else Display.cell_not_empty_error(@board.matrix[where])
+      end
+    else Display.error_move_out_of_range
+    end
+  end
+
+  
 end

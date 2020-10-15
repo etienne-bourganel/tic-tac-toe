@@ -7,9 +7,6 @@ require_relative 'display'
 require_relative 'game'
 
 game = Game.new
-game.turn
-game.turn
-game.turn
-game.turn
+game.flow
 
 binding.pry
