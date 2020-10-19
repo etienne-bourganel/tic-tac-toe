@@ -53,6 +53,8 @@ class Game
     end
     announce_winner_or_draw
     announce_score(@player1, @player2)
+    another_game?
+
   end
 
   def turn(player)
@@ -123,14 +125,19 @@ class Game
     end
   end
 
+  def re_initialize
+    @board = Board.new
+    @winner = nil
+  end
+
   def another_game?
     puts "\nWant to play again? enter y for yes. "
     answer = gets.chomp.to_s
     if answer == 'y'
+      re_initialize
       one_flow
     else
       exit
-      binding.pry
     end
   end
 end

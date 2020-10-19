@@ -8,4 +8,3 @@ require_relative 'game'
 
 game = Game.new
 game.one_flow
-game.another_game?
